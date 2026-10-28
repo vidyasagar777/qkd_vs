@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>QKD Physical-Layer Lab v0.3</title>
+<title>QKD Simulator &amp; Virtual QKD Lab | BB84, COW, MDI-QKD</title>
+<meta name="description" content="Free online QKD simulator and virtual quantum key distribution lab. Simulate BB84, COW and MDI-QKD over SMF and multicore fibre with WDM Raman noise, QBER and key rate.">
+<meta name="keywords" content="QKD simulator, virtual QKD lab, quantum key distribution simulator, online QKD lab, BB84 simulator, COW QKD, MDI-QKD simulator, QKD Raman noise WDM coexistence, QKD secret key rate calculator, multicore fibre crosstalk QKD">
+<meta name="author" content="Vidyasagar Solutions"><meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large"><meta name="theme-color" content="#2b2f87">
+<meta property="og:type" content="website"><meta property="og:site_name" content="QKD Physical-Layer Lab"><meta property="og:title" content="QKD Simulator &amp; Virtual QKD Lab | BB84, COW, MDI-QKD"><meta property="og:description" content="Research-oriented analytical simulator for quantum key distribution over fibre: loss, detector noise, WDM Raman scattering, multicore crosstalk, QBER and key rate.">
+<meta name="twitter:card" content="summary"><meta name="twitter:title" content="QKD Simulator &amp; Virtual QKD Lab"><meta name="twitter:description" content="Free online virtual QKD lab: BB84, COW and MDI-QKD with Raman noise, detectors and multicore fibre.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%94%90%3C/text%3E%3C/svg%3E">
+<!-- After hosting, add: <link rel="canonical" href="https://YOUR-DOMAIN/"> and <meta property="og:url" content="https://YOUR-DOMAIN/"> -->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"QKD Physical-Layer Lab","alternateName":["QKD Simulator","Virtual QKD Lab"],"description":"Research-oriented analytical simulator and virtual lab for quantum key distribution (BB84, COW, MDI-QKD) over single-mode and multicore fibre with WDM Raman noise, detector effects, QBER and secret key rate.","applicationCategory":"EducationalApplication","applicationSubCategory":"Quantum communication simulation","operatingSystem":"Any (web browser)","browserRequirements":"Requires JavaScript","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"creator":{"@type":"Organization","name":"Vidyasagar Solutions"},"copyrightHolder":{"@type":"Organization","name":"Vidyasagar Solutions"},"copyrightYear":2026,"inLanguage":"en","keywords":"QKD simulator, virtual QKD lab, BB84, COW, MDI-QKD, Raman noise, WDM coexistence, multicore fibre","featureList":["BB84 analytical decoy-state model","COW phenomenological estimate","MDI-QKD simplified model","WDM Raman noise with co and counter propagation","Multicore fibre crosstalk","Detector dead time, afterpulsing and jitter","Monte Carlo and validation checks","Experiment versus model comparison"]}</script>
 <style>
 :root{--bg:#f2f5fb;--pn:#fff;--ink:#101a33;--mut:#5d6a8a;--ln:#d9dfee;--ac:#5b5bf0;--ac2:#00a6a6;--wa:#e08a00;--bad:#d6334a;--ok:#1b9a5a}
 @media(prefers-color-scheme:dark){:root{--bg:#0b1020;--pn:#131a33;--ink:#e7ebfa;--mut:#8f9bbd;--ln:#252f55;--ac:#8c8cff;--ac2:#35d0c6;--wa:#ffb84d;--bad:#ff6b81;--ok:#4fdc97}}
@@ -32,58 +40,26 @@ table{border-collapse:collapse;font:12px ui-monospace,Menlo,monospace;width:100%
 textarea{width:100%;height:110px}.ch{display:grid;grid-template-columns:1fr 70px 80px 1fr 26px;gap:4px;margin:3px 0}.ch input,.ch select{width:100%}
 .nb{display:flex;height:12px;border-radius:6px;overflow:hidden;margin:6px 0}.tp{display:none}.tp.on{display:block}
 @media print{.hero .bar,.tabs,aside{display:none}main{display:block}.tp{display:block!important}}
-body::before {
-  content: "VIDYASAGAR SOLUTIONS";
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(-30deg);
-  font-size: 72px;
-  font-weight: 800;
-  letter-spacing: 6px;
-  opacity: 0.07;
-  pointer-events: none;
-  user-select: none;
-  white-space: nowrap;
-  z-index: 0;
-}
-
-main,
-header,
-footer,
-section,
-.panel,
-.card {
-  position: relative;
-  z-index: 1;
-}
-
-.site-footer {
-  text-align: center;
-  padding: 20px;
-  font-size: 12px;
-  opacity: 0.65;
-  line-height: 1.8;
-}
-</style>
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.075;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='260'%3E%3Ctext x='20' y='150' transform='rotate(-24 320 130)' font-family='Arial,sans-serif' font-size='24' font-weight='700' fill='%237a86a8'%3EQKD Physical-Layer Lab · Vidyasagar Solutions%3C/text%3E%3C/svg%3E")}
+footer{text-align:center;padding:22px 12px 30px;color:var(--mut);font-size:12.5px;border-top:1px solid var(--ln);margin-top:8px}footer b{color:var(--ink);font-size:14px}
 </style></head><body>
-<div class="hero"><h1>QKD Physical-Layer Lab <small style="font-weight:400;opacity:.7">v0.3</small></h1>
-<p>Model practical QKD over fibre: BB84, COW and MDI-QKD with loss, detector noise, Raman scattering and multicore crosstalk. Sweep parameters, optimise, compare with your measurements.</p>
+<div class="hero"><h1>QKD Physical-Layer Lab <small style="font-weight:400;opacity:.7">v0.4</small></h1>
+<p>Free online QKD simulator and virtual QKD lab. Model BB84, COW and MDI-QKD over fibre with loss, detector noise, WDM Raman scattering and multicore crosstalk. Sweep parameters, optimise, and compare with your measurements.</p>
 <div class="bar"><div class="seg" id="mode"><button data-l="0" class="on">Basic</button><button data-l="1">Research</button><button data-l="2">Advanced</button></div>
 <select id="pre"><option value="">Preset: custom settings</option><option value="cow">COW-Slim lab testbed</option><option value="bb">BB84 · SNSPD · long haul</option><option value="wl">WDM coexistence · low power</option><option value="wh">WDM coexistence · high power</option><option value="mcf">MCF + WDM coexistence</option><option value="mdi">MDI-QKD lab testbed</option></select>
 <label><input type="checkbox" id="hints"> show parameter hints</label></div></div>
-<main><aside>
+<noscript><p style="padding:16px">QKD Physical-Layer Lab is an interactive QKD simulator and needs JavaScript enabled.</p></noscript><main><aside>
 <div class="pn"><h2>System</h2>
-<div class="sel"><label>Protocol</label><select id="proto"><option value="bb84">BB84 · vacuum-assisted analytical decoy</option><option value="cow">COW · phenomenological estimate</option><option value="mdi">MDI-QKD · simplified asymptotic</option></select></div>
+<div class="sel"><label>Protocol</label><select id="proto"><option value="bb84">BB84 · analytical decoy-state lower bound</option><option value="cow">COW · phenomenological estimate</option><option value="mdi">MDI-QKD · simplified asymptotic</option></select></div>
 <div class="sel"><label>Fibre type</label><select id="fiber"><option value="smf">SMF (single core)</option><option value="mcf">MCF (multicore)</option></select></div>
 <div class="sel"><label>Fibre loss</label><select id="alp"><option value="g652">Representative G.652.D α(λ)</option><option value="user">User-defined α</option></select></div>
 <div class="sel"><label>Detector</label><select id="det"><option value="ingaas">InGaAs SPAD</option><option value="snspd">SNSPD</option><option value="custom">Custom</option></select></div>
 <div class="sel"><label>Dead-time model</label><select id="dm"><option value="np">non-paralyzable (throughput only)</option><option value="p">paralyzable (throughput only)</option></select></div>
-<div class="sel"><label>Raman model</label><select id="rm"><option value="spec">approx. spectral (silica)</option><option value="const">constant β</option></select></div><div class="sel"><label>Key threshold (bps)</label><input type="number" id="rmin" value="1" step="any" min="0"></div><div class="sel"><label>Security</label><select id="sec"><option value="asym">Asymptotic</option><option value="fin">Finite-size, Gaussian (BB84)</option></select></div>
+<div class="sel"><label>Raman model</label><select id="rm"><option value="spec">approx. spectral (silica)</option><option value="const">constant β</option></select></div><div class="sel"><label>Key threshold (bps)</label><input type="number" id="rmin" value="1" step="any" min="0"></div><div class="sel"><label>Security</label><select id="sec"><option value="asym">Asymptotic</option><option value="fin">Gaussian finite-size approximation (BB84)</option></select></div>
 <div class="sel"><label>Classical (CC)</label><label style="color:var(--ink)"><input type="checkbox" id="cc"> classical channels on</label></div></div>
 <div class="pn"><h2>Parameters</h2><div id="params"></div></div>
 <div class="pn" id="chp"><h2>WDM channels (classical)</h2><div class="ch note"><span>λ (nm)</span><span>dBm</span><span>direction</span><span>core</span><span></span></div><div id="chs"></div><button class="a" id="addch">+ Add channel</button>
-<div data-l="2"><h3>Raman spectrum β(Δλ) — optional</h3><textarea id="rs" placeholder="shift_nm,beta_1e-10  (one pair per line; overrides constant β)"></textarea></div></div>
+<div data-l="2"><h3>Measured fibre loss α(λ) — optional</h3><textarea id="at" placeholder="wavelength_nm,loss_dB_per_km  (replaces the representative G.652.D curve)"></textarea><h3>Raman spectrum β(Δλ) — optional</h3><textarea id="rs" placeholder="shift_nm,beta_1e-10  (one pair per line; overrides constant β)"></textarea></div></div>
 </aside><section>
 <div class="pn"><div id="diag"></div></div>
 <div class="pn"><div class="kpi" id="kpi"></div></div>
@@ -94,23 +70,20 @@ section,
 <div class="pn"><h2>Evaluated at current point</h2><table id="tb"></table></div></div>
 <div class="tp" id="t-opt"><div class="pn"><h2>Optimise</h2><button class="a" id="o1">Best μ</button><button class="a" id="o2">Max CC power above key threshold</button><div id="oo" class="note" style="margin-top:6px"></div>
 <h2 style="margin-top:14px">Sensitivity (±10 %, CC power ±1 dB)</h2><table id="sn"></table>
-<h2 style="margin-top:14px">Monte Carlo check (BB84 / COW)</h2><div class="sel" style="grid-template-columns:auto auto auto auto"><label>Pulses</label><select id="mcn"><option>100000</option><option selected>1000000</option><option>10000000</option></select><label>Seed</label><input type="number" id="seed" value="12345" style="width:90px"></div><button class="a" id="mcb">Run Monte Carlo</button><div id="mcout" class="note"></div><h2 style="margin-top:14px">Validation checks</h2><button class="a" id="vb">Run validation checks</button><div id="vo"></div></div></div>
-<div class="tp" id="t-exp"><div class="pn"><h2>Paste measurements</h2><p class="note">CSV columns: <code>distance_km,qber_percent,skr_bps</code>. Points are overlaid on the plots (distance sweep) and compared with the model at your current settings.</p><textarea id="exp" placeholder="10,1.8,52000&#10;30,2.1,9800&#10;50,2.9,1900"></textarea><button class="a" id="expb">Compare</button><div id="expo"></div></div></div>
+<h2 style="margin-top:14px">Detection-statistics Monte Carlo (BB84 / COW)</h2><div class="sel" style="grid-template-columns:auto auto auto auto"><label>Pulses</label><select id="mcn"><option>100000</option><option selected>1000000</option><option>10000000</option></select><label>Seed</label><input type="number" id="seed" value="12345" style="width:90px"></div><button class="a" id="mcb">Run Monte Carlo</button><div id="mcout" class="note"></div><h2 style="margin-top:14px">Validation checks</h2><button class="a" id="vb">Run validation checks</button><div id="vo"></div></div></div>
+<div class="tp" id="t-exp"><div class="pn"><h2>Paste measurements</h2><p class="note">CSV columns: <code>distance_km,qber_percent,skr_bps</code> and optionally <code>qber_err_percent,skr_err_bps</code> (1σ error bars). Points are overlaid on the plots (distance sweep) and compared with the model at your current settings.</p><textarea id="exp" placeholder="10,1.8,52000,0.2,4000&#10;30,2.1,9800,0.3,900&#10;50,2.9,1900,0.4,200"></textarea><button class="a" id="expb">Compare</button><div id="expo"></div></div></div>
 <div class="tp" id="t-eqs"><div class="pn"><h2>Model equations</h2><div id="eqs"></div><h2 style="margin-top:12px">References</h2><div id="refs"></div><p class="note">Verify every equation and citation against the original papers before publication. Not a composable security proof.</p></div></div>
 <div class="tp" id="t-rep"><div class="pn"><h2>Reproducible run record (JSON)</h2><textarea id="json" style="height:200px"></textarea><button class="a" id="jl">Load JSON</button><button class="a" id="pr">Print report</button>
 <h2 style="margin-top:12px">Sweep data (CSV)</h2><textarea id="csv" readonly></textarea></div></div>
-
-<footer class="site-footer">
-  <strong>QKD Physical-Layer Lab v0.3</strong><br>
-  Research-oriented analytical simulator<br>
-  © 2026 Vidyasagar Solutions
-</footer>
-
-</section></main>
+</section></main><section class="pn" id="about" style="max-width:1100px;margin:0 auto 14px"><h2>About this virtual QKD lab</h2>
+<p>QKD Physical-Layer Lab is a browser-based QKD simulator for studying how fibre loss, detector characteristics, WDM coexistence with classical channels (spontaneous Raman scattering) and multicore-fibre crosstalk affect the error rate (QBER) and secret key rate of quantum key distribution links. Choose a protocol, set the physical parameters, sweep any variable, and compare the model with your own measurements.</p>
+<h3>Which QKD protocols can I simulate?</h3><p>Decoy-state BB84 (analytical lower-bound model, with an optional Gaussian finite-size approximation), coherent one way (COW, a phenomenological estimate) and measurement-device-independent QKD (MDI-QKD, a simplified asymptotic model).</p>
+<h3>What can I experiment with?</h3><p>Single-mode and multicore fibre, G.652.D loss versus wavelength, per-channel classical power, wavelength and propagation direction, receiver filter bandwidth, InGaAs SPAD and SNSPD detector settings, dead time, afterpulsing, timing jitter, optimisation, sensitivity analysis, Monte Carlo checks and automated validation tests.</p>
+<h3>Is this a security proof?</h3><p>No. It is an analytical physical-layer simulator for engineering studies, teaching and experiment planning. COW and MDI results are not security-grade, and the finite-size option is not a composable finite-key proof. Each model states its assumptions on the page; verify equations and references against the original papers before publication.</p></section><footer><b>QKD Physical-Layer Lab</b><br>Research-oriented analytical simulator<br>© 2026 Vidyasagar Solutions</footer>
 <script>
-const $=id=>document.getElementById(id),VER='QKD-PLL v0.3';
+const $=id=>document.getElementById(id),VER='QKD-PLL v0.4';
 const S=[ // id,label,unit,min,max,step,val,group,level,hint
-['L','Distance','km',10,300,10,50,'',0,'Fibre length between transmitter and receiver (MDI: Alice to Bob).'],
+['L','Distance (MDI: L = L_AC + L_CB)','km',10,300,10,50,'',0,'Total fibre span. For MDI it is the sum of the Alice–Charlie and Charlie–Bob lengths.'],
 ['mu','Mean photon number μ','',0.1,1.0,0.1,0.5,'',0,'Mean photons per signal pulse. Higher gives more signal but more multi-photon leakage.'],
 ['nu','Pulse repetition rate','MHz',1,1000,1,100,'',0,'Pulse repetition rate of the source.'],
 ['etad','Detector efficiency','%',1,95,1,20,'',0,'Probability that an arriving photon is registered.'],
@@ -126,7 +99,7 @@ const S=[ // id,label,unit,min,max,step,val,group,level,hint
 ['td','Detector dead time','µs',0,100,0.05,10,'',1,'Time after a click when the detector is blind. Limits the maximum count rate.'],
 ['dl','Receiver filter bandwidth','nm',0.05,2,0.05,0.2,'cc',1,'Narrower filters admit less Raman noise.'],
 ['beta','Raman coefficient β₀ (13 THz peak)','×10⁻¹⁰ /km/nm',0.1,50,0.1,2,'cc',1,'Raman efficiency at the 13 THz Stokes peak. The spectral model scales it with the classical–quantum frequency shift; a pasted spectrum overrides it.'],
-['xt','Adjacent-core power coupling κ','dB/km',-90,-30,1,-60,'xt',1,'Distributed coupling: fraction of power entering one adjacent core per km, κ = 10^(value/10) per km (−60 gives 1e-6 per km). Divide a datasheet XT(L) by L to get κ.'],
+['xt','Crosstalk coupling κ (input dB/km → linear per km)','dB/km',-90,-30,1,-60,'xt',1,'Input in dB/km, converted internally to a linear coupling per km. Distributed coupling: fraction of power entering one adjacent core per km, κ = 10^(value/10) per km (−60 gives 1e-6 per km). Divide a datasheet XT(L) by L to get κ.'],
 ['nadj','Interfering adjacent cores','',1,6,1,2,'xt',1,'Number of neighbouring cores that carry classical light.'],
 ['aQ','Quantum fibre loss α_Q','dB/km',0.15,0.5,0.01,0.2,'ul',1,'Attenuation at the quantum wavelength.'],
 ['aC','Classical fibre loss α_C','dB/km',0.15,0.5,0.01,0.2,'ul',1,'Attenuation at the classical wavelengths.'],
@@ -134,32 +107,32 @@ const S=[ // id,label,unit,min,max,step,val,group,level,hint
 ['tB','COW data-line fraction t_B','',0.5,0.99,0.01,0.9,'cow',2,'Fraction of light sent to the data detector; the rest feeds the monitoring line.'],
 ['V','COW interferometer visibility','%',80,100,0.5,98,'cow',2,'Monitoring-line interference visibility.'],
 ['f','Error-correction efficiency f','',1,1.5,0.01,1.16,'',2,'Ratio of the error-correction leakage to the Shannon limit.'],
-['ap','Afterpulse probability','%',0,10,0.1,1.5,'',2,'Probability of a false click triggered by a previous click.'],
+['ap','Effective afterpulse probability (per window)','%',0,10,0.1,1.5,'',2,'Effective probability of a false click per detection window, scaled with the signal click probability. Not a temporal afterpulse model.'],
 ['jit','Timing jitter σ','ps',0,1000,10,100,'',2,'Detector timing spread; clicks outside the window are lost.'],
 ['Nl','log₁₀ pulses sent N','',6,12,0.5,10,'fin',2,'Total pulses in the finite-size analysis (10¹⁰ pulses at 100 MHz is 100 s).'],['kz','Confidence k (σ)','',3,8,0.5,5,'fin',2,'Gaussian deviation applied to every statistical bound; also sets ε_sec = erfc(k/√2).'],['iso','Out-of-band isolation','dB',0,140,1,100,'xt',2,'Filter suppression of crosstalk light outside the quantum band.']];
 const DET={ingaas:{etad:20,dcr:1000,td:10,ap:1.5,jit:100},snspd:{etad:80,dcr:100,td:0.05,ap:0,jit:30}},DK=Object.keys(DET.ingaas);
 const ALPHA=[[1260,.40],[1310,.33],[1383,.31],[1460,.24],[1530,.20],[1550,.19],[1565,.20],[1625,.23]];
 const SW={L:[10,300,10,'Distance (km)'],mu:[0.1,1,0.05,'Mean photon number μ'],pco:[-30,10,1,'CC power offset (dB)'],etad:[5,95,5,'Detector efficiency (%)'],dcr:[0,20000,500,'Dark counts (Hz)'],ed:[0.5,10,0.5,'Misalignment (%)'],dl:[0.05,2,0.05,'Filter bandwidth (nm)'],bob:[0,10,0.5,'Receiver loss (dB)'],lamQ:[1530,1570,1,'Quantum wavelength (nm)'],lamC:[1510,1560,1,'Classical channel 1 wavelength (nm)']};
 const P={proto:'bb84',fiber:'smf',alp:'g652',det:'ingaas',dm:'np',cc:false,lvl:0,rm:'spec',rmin:1,sec:'asym',lamC:null};S.forEach(s=>P[s[0]]=s[6]);const D0={...P};
-let CH=[{lam:1548,p:-10,dir:'co',core:'same'}],RS=[],EXP=[];
+let CH=[{lam:1548,p:-10,dir:'co',core:'same'}],RS=[],EXP=[],AT=[];
 const interp=(T,x)=>{if(!T.length)return 0;if(x<=T[0][0])return T[0][1];for(let i=1;i<T.length;i++)if(x<=T[i][0]){const a=T[i-1],b=T[i];return a[1]+(b[1]-a[1])*(x-a[0])/(b[0]-a[0])}return T[T.length-1][1]};
 const erf=x=>{const t=1/(1+0.3275911*Math.abs(x)),y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-x*x);return x<0?-y:y};
 const h2=p=>{p=Math.min(Math.max(p,1e-12),0.5);return -p*Math.log2(p)-(1-p)*Math.log2(1-p)};
 const nf=v=>v>=1000?Math.round(v).toLocaleString('en-US'):v>=10?v.toFixed(1):v>=0.1?v.toFixed(2):v>0?(+v.toPrecision(2)).toString():'0';
 const sci=v=>v===0?'0':(Math.abs(v)<1e-3||Math.abs(v)>=1e5)?v.toExponential(2):(+v.toPrecision(4)).toString();
-const alphaAt=l=>P.alp==='g652'?interp(ALPHA,l):null;
+const alphaAt=l=>P.alp==='g652'?interp(AT.length?AT:ALPHA,l):null;
 const bshape=(lc,lq)=>{const nc=299792.458/lc,nq=299792.458/lq,d=Math.abs(nc-nq);if(d<1e-6)return 0;const g=d<=13?d/13:d<=40?(40-d)/27:0,x=0.1627*d,n=1/Math.expm1(x),n13=1/Math.expm1(0.1627*13);return g*(nq<nc?n+1:n)/(n13+1)};
 function noise(l,eRx,tau){
- const aq=(P.alp==='g652'?interp(ALPHA,P.lamQ):P.aQ)*Math.LN10/10,Eph=6.626e-34*3e8/(P.lamQ*1e-9);let ram=0,xt=0;
+ const aq=(P.alp==='g652'?interp(AT.length?AT:ALPHA,P.lamQ):P.aQ)*Math.LN10/10,Eph=6.626e-34*3e8/(P.lamQ*1e-9);let ram=0,xt=0;
  if(P.cc)for(const c of (P.lamC!=null?CH.map((c,i)=>i?c:{...c,lam:P.lamC}):CH)){
-  const ac=(P.alp==='g652'?interp(ALPHA,c.lam):P.aC)*Math.LN10/10,Pw=1e-3*Math.pow(10,(c.p+P.pco)/10);
+  const ac=(P.alp==='g652'?interp(AT.length?AT:ALPHA,c.lam):P.aC)*Math.LN10/10,Pw=1e-3*Math.pow(10,(c.p+P.pco)/10);
   const fw=Math.abs(ac-aq)<1e-9?l*Math.exp(-aq*l):(Math.exp(-aq*l)-Math.exp(-ac*l))/(ac-aq),bw=(1-Math.exp(-(ac+aq)*l))/(ac+aq),I=c.dir==='co'?fw:bw;
   if(P.fiber==='mcf'&&c.core==='adj')xt+=P.nadj*Math.pow(10,P.xt/10)*Pw*I*Math.pow(10,-P.iso/10);
   else{const b=RS.length?interp(RS,Math.abs(c.lam-P.lamQ)):P.rm==='const'?P.beta:P.beta*bshape(c.lam,P.lamQ);ram+=Pw*b*1e-10*P.dl*I}}
  return{dark:1-Math.exp(-P.dcr*tau),ram:1-Math.exp(-ram/Eph*tau*eRx),xt:1-Math.exp(-xt/Eph*tau*eRx)}}
 function calc(Q){
  const old=Object.assign({},P);Object.assign(P,Q);
- try{const L=P.L,aq=P.alp==='g652'?interp(ALPHA,P.lamQ):P.aQ,tau=P.tau*1e-9,
+ try{const L=P.L,aq=P.alp==='g652'?interp(AT.length?AT:ALPHA,P.lamQ):P.aQ,tau=P.tau*1e-9,
   eRx=Math.pow(10,-P.bob/10)*P.etad/100*(P.jit>0?erf(P.tau/(2.828*P.jit/1000)):1),ed=P.ed/100,mu=P.mu,f=P.f,nu=P.nu*1e6,ap=P.ap/100,T=l=>Math.pow(10,-aq*l/10);
   let o,click,sig;
   if(P.proto==='mdi'){
@@ -183,7 +156,7 @@ function calc(Q){
     o={skr:Math.max(R,0)*nu,qber:Em,noise:nz,T:[T(L)],mc:{m:eta*mu,p,two:true,Q:Qm},vals:{η:eta,Y_0:Y0,Q_μ:Qm,E_μ:Em,Q_ν:Qn,E_ν:En,'Y_1^L':Y1,'e_1^U':e1,'Q_1^L':Q1,...(P.sec==='fin'?{'Y_1^L (finite)':fin.Y1f,'e_1^U (finite)':fin.e1f,'eps_sec':fin.eps,'R/pulse (asymptotic)':Ra}:{}),'R/pulse':R}};
    }else{
     const S1=1-Math.exp(-eta*mu*P.tB),S2=1-Math.exp(-eta*mu*(1-P.tB)),qb=(ed*S1+0.5*p)/(S1+p),V=(P.V/100)*S2/(S2+p),eph=(1-V)/2,R=0.5*(S1+p)*Math.max(0,1-f*h2(qb)-h2(eph));click=S1+p;sig=S1;
-    o={skr:R*nu,qber:qb,noise:nz,T:[T(L)],mc:{m:eta*mu*P.tB,p,two:false,Q:S1+p},vals:{η:eta,S_data:S1,QBER:qb,V_mon:V,e_ph:eph,'R/bit':R}};
+    o={skr:R*nu,qber:qb,noise:nz,T:[T(L)],mc:{m:eta*mu*P.tB,p,two:false,Q:S1+p},vals:{η:eta,S_data:S1,QBER:qb,V_mon:V,'Est. phase-error rate e_ph':eph,'R/bit':R}};
    }}
   const Rc=nu*click,td=P.td*1e-6,Fd=P.dm==='p'?Math.exp(-Rc*td):1/(1+Rc*td);o.skr*=Fd;o.vals['dead-time factor']=Fd;o.sig=sig;o.click=click;o.Fd=Fd;return o}
  finally{Object.assign(P,old)}}
@@ -198,7 +171,8 @@ const set=(k,v)=>{P[k]=v;els[k][0].value=v;els[k][1].value=v};
 $('sw').innerHTML=Object.entries(SW).map(([k,v])=>`<option value="${k}">${v[3]}</option>`).join('');
 function syncUI(){S.forEach(s=>set(s[0],P[s[0]]));['proto','fiber','alp','det','dm','rm','sec'].forEach(k=>$(k).value=P[k]);$('cc').checked=P.cc;$('rmin').value=P.rmin;
  document.querySelectorAll('#mode button').forEach(b=>b.classList.toggle('on',+b.dataset.l===P.lvl));renderCH()}
-function vis(){wrap.querySelectorAll('.row').forEach(d=>{const g=d.dataset.g,ok=(!g)||(g==='cc'?P.cc:g==='xt'?P.cc&&P.fiber==='mcf':g==='ul'?P.alp==='user':g==='fin'?(P.sec==='fin'&&P.proto==='bb84'):P.proto===g);d.style.display=ok&&P.lvl>=+d.dataset.l?'':'none'});
+function vis(){const sc=$('sec');if(P.proto==='bb84'){if(!sc.querySelector('[value=fin]')){sc.innerHTML='<option value="asym">Asymptotic analytical</option><option value="fin">Gaussian finite-size approximation (BB84)</option>'}sc.disabled=false;sc.value=P.sec}else{sc.innerHTML='<option>'+(P.proto==='cow'?'Phenomenological estimate':'Simplified asymptotic estimate')+'</option>';sc.disabled=true}
+ wrap.querySelectorAll('.row').forEach(d=>{const g=d.dataset.g,ok=(!g)||(g==='cc'?P.cc:g==='xt'?P.cc&&P.fiber==='mcf':g==='ul'?P.alp==='user':g==='fin'?(P.sec==='fin'&&P.proto==='bb84'):P.proto===g);d.style.display=ok&&P.lvl>=+d.dataset.l?'':'none'});
  $('chp').style.display=P.cc?'':'none';document.querySelectorAll('[data-l="2"]').forEach(e=>{if(e.tagName==='DIV'&&!e.classList.contains('row'))e.style.display=P.lvl>=2?'':'none'})}
 ['proto','fiber','alp','dm'].forEach(k=>$(k).onchange=e=>{$('pre').value='';P[k]=e.target.value;if(k==='proto'){const d={bb84:[0.5,0.5],cow:[0.5,0.5],mdi:[0.3,0.3]}[P.proto];set('mu',d[0]);set('muB',d[1])}renderCH();upd()});
 $('det').onchange=e=>{P.det=e.target.value;if(DET[P.det])Object.keys(DET[P.det]).forEach(k=>set(k,DET[P.det][k]));upd()};
@@ -210,11 +184,12 @@ function renderCH(){$('chs').innerHTML=CH.map((c,i)=>`<div class="ch"><input typ
 $('chs').onchange=e=>{const t=e.target,i=t.dataset.i;if(i==null)return;$('pre').value='';CH[i][t.dataset.k]=t.tagName==='SELECT'?t.value:+t.value;upd()};
 $('chs').onclick=e=>{if(e.target.dataset.del!=null){CH.splice(+e.target.dataset.del,1);renderCH();upd()}};
 $('addch').onclick=()=>{CH.push({lam:1552,p:-10,dir:'co',core:'same'});renderCH();upd()};
+$('at').oninput=e=>{AT=e.target.value.split('\n').map(l=>l.split(',').map(Number)).filter(a=>a.length>=2&&isFinite(a[0])&&isFinite(a[1])).sort((a,b)=>a[0]-b[0]);upd()};
 $('rs').oninput=e=>{RS=e.target.value.split('\n').map(l=>l.split(',').map(Number)).filter(a=>a.length>=2&&isFinite(a[0])&&isFinite(a[1])).sort((a,b)=>a[0]-b[0]);upd()};
 const PRE={cow:[{proto:'cow',nu:500,lamQ:1550.12,mu:0.5,L:50,det:'ingaas',cc:false},null],bb:[{proto:'bb84',det:'snspd',cc:false,L:150,mu:0.5,nu:1000},null],
  wl:[{proto:'bb84',det:'snspd',cc:true,fiber:'smf',L:50,pco:0},[{lam:1548,p:-20,dir:'co',core:'same'}]],wh:[{proto:'bb84',det:'snspd',cc:true,fiber:'smf',L:50,pco:0},[{lam:1548,p:0,dir:'co',core:'same'}]],
  mcf:[{proto:'bb84',det:'snspd',cc:true,fiber:'mcf',L:50,pco:0},[{lam:1548,p:-5,dir:'co',core:'adj'},{lam:1552,p:-5,dir:'co',core:'same'}]],mdi:[{proto:'mdi',det:'snspd',cc:false,L:100,mu:0.3,muB:0.3,nu:100},null]};
-$('pre').onchange=e=>{const p=PRE[e.target.value];if(!p)return;const lv=P.lvl;Object.assign(P,D0,{lvl:lv},p[0]);if(DET[P.det])Object.assign(P,DET[P.det]);CH=p[1]?p[1].map(c=>({...c})):[{lam:1548,p:-10,dir:'co',core:'same'}];RS=[];$('rs').value='';syncUI();upd()};
+$('pre').onchange=e=>{const p=PRE[e.target.value];if(!p)return;const lv=P.lvl;Object.assign(P,D0,{lvl:lv},p[0]);if(DET[P.det])Object.assign(P,DET[P.det]);CH=p[1]?p[1].map(c=>({...c})):[{lam:1548,p:-10,dir:'co',core:'same'}];RS=[];AT=[];$('rs').value='';$('at').value='';syncUI();upd()};
 // ---------- plotting
 const css=k=>getComputedStyle(document.documentElement).getPropertyValue(k).trim();
 function plot(cv,xs,ser,o){
@@ -231,7 +206,7 @@ function plot(cv,xs,ser,o){
  if(o.cur>=x0&&o.cur<=x1){g.strokeStyle=css('--mut');g.setLineDash([2,3]);g.beginPath();g.moveTo(X(o.cur),mt);g.lineTo(X(o.cur),mt+ph);g.stroke();g.setLineDash([])}
  ser.forEach((s,k)=>{g.strokeStyle=css(s.c);g.lineWidth=2.5;g.beginPath();s.ys.forEach((v,i)=>{const px=X(xs[i]),py=Y(tr(v));i?g.lineTo(px,py):g.moveTo(px,py)});g.stroke();
   if(ser.length>1){g.fillStyle=css(s.c);g.textAlign='left';g.fillText('■ '+s.n,ml+8+k*90,mt+12)}});
- (o.pts||[]).forEach(p=>{if(p.x<x0||p.x>x1)return;g.fillStyle=css('--wa');g.beginPath();g.arc(X(p.x),Y(tr(p.y)),4.5,0,7);g.fill()})}
+ (o.pts||[]).forEach(p=>{if(p.x<x0||p.x>x1)return;if(p.e>0){const lo2=Math.max(p.y-p.e,lg?o.floor:0);g.strokeStyle=css('--wa');g.lineWidth=1.5;g.beginPath();g.moveTo(X(p.x),Y(tr(p.y+p.e)));g.lineTo(X(p.x),Y(tr(lo2)));g.stroke();[p.y+p.e,lo2].forEach(v=>{g.beginPath();g.moveTo(X(p.x)-4,Y(tr(v)));g.lineTo(X(p.x)+4,Y(tr(v)));g.stroke()})}g.fillStyle=css('--wa');g.beginPath();g.arc(X(p.x),Y(tr(p.y)),4.5,0,7);g.fill()})}
 // ---------- diagram, diagnosis
 function diag(o){const m=P.proto==='mdi',fl=P.fiber==='mcf'?3:1,W=760;
  const node=(x,t,c,tc)=>`<rect x="${x}" y="58" width="96" height="62" rx="12" fill="${c}"/><text x="${x+48}" y="95" text-anchor="middle" fill="${tc}" font-size="15" font-weight="600">${t}</text>`;
@@ -244,8 +219,8 @@ function diag(o){const m=P.proto==='mdi',fl=P.fiber==='mcf'?3:1,W=760;
  $('diag').innerHTML=s+'</svg>'}
 function diagnose(o){const N=o.noise,tot=N.dark+N.ram+N.xt+N.ap,top=Object.entries(N).sort((a,b)=>b[1]-a[1])[0][0];
  const nm={dark:'dark counts',ram:'Raman noise',xt:'multicore crosstalk',ap:'afterpulsing'},rec={dark:'use a lower-DCR detector, shorten τ or cool the detector.',ram:'lower CC launch power, narrow the receiver filter, or increase wavelength separation.',xt:'raise filter isolation, move classical light to non-adjacent cores or lower its power.',ap:'reduce afterpulse probability or lengthen dead time.'};
- let why;if(o.qber>0.11&&P.proto!=='cow')why=`QBER exceeds the ~11 % limit; ${nm[top]} is the largest noise source. Fix: ${rec[top]}`;else if(tot>o.sig)why=`noise per window (${sci(tot)}) exceeds signal (${sci(o.sig)}), dominated by ${nm[top]}. Fix: ${rec[top]}`;else if(o.Fd<0.3)why=`detector dead time saturates the count rate (throughput ${(o.Fd*100).toFixed(0)}%). Fix: shorter dead time or lower clock rate.`;else why='channel and receiver loss dominate; error-correction and privacy-amplification cost exceeds the single-photon key. Fix: shorter distance, lower loss or higher η_d.';return why}
-const LIM={bb84:'BB84: asymptotic vacuum-assisted analytical decoy. Y₀ = 1−(1−p)² assumes two detectors with equal background p (DCR per detector); it is not estimated from vacuum pulses.',cow:'COW: phenomenological estimate. No separate monitoring detector, imbalance or interferometer loss, and no COW security bound; not a secure key rate.',mdi:'MDI-QKD: illustrative low-order model (one intensity per party, Y₁₁ and e₁₁ not decoy-estimated). Do not use for quantitative paper results.'};
+ let why;if(o.qber>0.11&&P.proto!=='cow')why=`QBER exceeds the ~11 % reference threshold used by this model (the tolerable QBER depends on protocol, security assumptions, reconciliation efficiency, finite-key analysis and implementation) and the rate equation gives no positive key; ${nm[top]} is the largest noise source. Fix: ${rec[top]}`;else if(tot>o.sig)why=`noise per window (${sci(tot)}) exceeds signal (${sci(o.sig)}), dominated by ${nm[top]}. Fix: ${rec[top]}`;else if(o.Fd<0.3)why=`detector dead time saturates the count rate (throughput ${(o.Fd*100).toFixed(0)}%). Fix: shorter dead time or lower clock rate.`;else why='channel and receiver loss dominate; error-correction and privacy-amplification cost exceeds the single-photon key. Fix: shorter distance, lower loss or higher η_d.';return why}
+const LIM={bb84:'BB84: asymptotic analytical decoy-state lower bound. Y₀ = 1−(1−p)² assumes two detectors with equal background p (DCR per detector); it is not estimated from vacuum pulses.',cow:'COW: phenomenological estimate. No separate monitoring detector, imbalance or interferometer loss, and no COW security bound; not a secure key rate.',mdi:'MDI-QKD: illustrative low-order model (one intensity per party, Y₁₁ and e₁₁ not decoy-estimated). Do not use for quantitative paper results.'};
 // ---------- main update
 function upd(){
  vis();const o=calc({}),sv=$('sw').value,[lo,hi,st]=SW[sv],xs=[],R=[];
@@ -253,15 +228,15 @@ function upd(){
  let dmax=0,hiL=0;for(let l=5;l<=300;l+=5)if(calc({L:l}).skr>P.rmin)hiL=l;if(hiL){let a=hiL,b=hiL+5;for(let i=0;i<14;i++){const m=(a+b)/2;if(calc({L:m}).skr>P.rmin)a=m;else b=m}dmax=hiL>=300?300:a}
  const N=o.noise,nt=N.dark+N.ram+N.xt+N.ap,col={dark:'--mut',ram:'--ac',xt:'--wa',ap:'--ac2'},nn={dark:'dark',ram:'Raman',xt:'crosstalk',ap:'afterpulse'};
  const lab={bb84:'Key rate · asymptotic',cow:'Key-rate estimate · unproven',mdi:'Key-rate est. · simplified'}[P.proto];
- $('kpi').innerHTML=`<div><b>${nf(o.skr)} bps</b><span>${lab}</span></div><div><b>${(o.qber*100).toFixed(2)}%</b><span>QBER</span></div><div><b>${dmax?(dmax>=300?'> 300':dmax.toFixed(1))+' km':'< 5 km'}</b><span>max distance (key &gt; ${nf(P.rmin)} bps)</span></div><div><b>${sci(nt)}</b><span>noise / window</span></div><div><b>${sci(o.sig)}</b><span>signal / window</span></div>`;
+ $('kpi').innerHTML=`<div><b>${nf(o.skr)} bps</b><span>${lab}</span></div><div><b>${(o.qber*100).toFixed(2)}%</b><span>${P.proto==='cow'?'Data QBER':'QBER'}</span></div><div><b>${dmax?(dmax>=300?'> 300':dmax.toFixed(1))+' km':'< 5 km'}</b><span>Maximum distance for key ≥ ${nf(P.rmin)} bps</span></div><div><b>${sci(nt)}</b><span>noise / window</span></div><div><b>${sci(o.sig)}</b><span>signal / window</span></div>`;
  const bar=nt>0?Object.keys(N).map(k=>`<div style="width:${100*N[k]/nt}%;background:var(${col[k]})" title="${nn[k]}"></div>`).join(''):'';
  const leg=Object.keys(N).map(k=>`<span style="color:var(${col[k]})">■</span> ${nn[k]} ${nt>0?(100*N[k]/nt).toFixed(0):0}%`).join(' &nbsp; ');
  const W=[];if(P.nd>=P.mu&&P.proto==='bb84')W.push('ν_d must be below μ; it is clamped to 0.9 μ.');if(P.dcr*P.tau*1e-9>0.05*o.sig)W.push('High background probability relative to signal.');if(o.Fd<0.5)W.push(`Dead time cuts throughput to ${(o.Fd*100).toFixed(0)}%.`);if(P.proto==='mdi'&&Math.abs(P.x-0.5)>0.35)W.push('Strongly asymmetric Charlie position.');
- $('lim').innerHTML=`<h2>Model fidelity: analytical · ${P.sec==='fin'&&P.proto==='bb84'?'finite-size, Gaussian bounds (approximate)':'asymptotic'}</h2><div class="note">${LIM[P.proto]} Not modelled: ${P.sec==='fin'&&P.proto==='bb84'?'composable finite-key proof (Gaussian k-σ bounds only; intensity probabilities fixed at 0.80/0.15/0.05)':'finite-key effects'}, detector mismatch, source fluctuations. Raman β: ${RS.length?'from your spectrum':P.rm==='const'?'constant':'approximate triangular gain × thermal factor (silica)'}. Dead time is a first-order throughput correction. Background probability is capped at 0.5.</div><div class="nb">${bar}</div><div class="note">Noise budget: ${leg}</div>${W.map(w=>`<div class="warn">⚠ ${w}</div>`).join('')}`+(o.skr<=0?`<div class="warn"><b>ABORT: no positive secret key.</b> Primary cause: ${diagnose(o)}</div>`:'<div class="ok">Positive key rate.</div>');
+ $('lim').innerHTML=`<h2>Model fidelity: ${P.proto==='bb84'?'Level B · research analytical':'Level A · engineering'} · ${P.sec==='fin'&&P.proto==='bb84'?'Gaussian finite-size approximation (not composable)':'asymptotic'}</h2><div class="note">${LIM[P.proto]} Not modelled: ${P.sec==='fin'&&P.proto==='bb84'?'composable finite-key proof (Gaussian k-σ bounds only; intensity probabilities fixed at 0.80/0.15/0.05)':'finite-key effects'}, detector mismatch, source fluctuations. Raman β: ${RS.length?'from your spectrum':P.rm==='const'?'constant':'approximate triangular gain × thermal factor (silica)'}. Dead time is a first-order throughput correction. Background probability is capped at 0.5. Fibre loss: ${AT.length?'from your measured table':P.alp==='g652'?'representative G.652.D (use measured data for papers)':'user-defined constant'}.</div><div class="nb">${bar}</div><div class="note">Noise budget: ${leg}</div>${W.map(w=>`<div class="warn">⚠ ${w}</div>`).join('')}`+(o.skr<=0?`<div class="warn"><b>ABORT: no positive secret key.</b> Primary cause: ${diagnose(o)}</div>`:'<div class="ok">Positive key rate.</div>');
  diag(o);
  const lgS=$('ylog').value==='log',xl=SW[sv][3],cur=sv==='lamC'?(CH[0]?CH[0].lam:0):P[sv],pk=sv==='L';
- plot($('c1'),xs,[{ys:R.map(r=>r.skr),c:'--ac',n:'SKR'}],{log:lgS,floor:Math.min(1,P.rmin),tf:v=>nf(v),cur,pts:pk?EXP.map(e=>({x:e.d,y:e.skr})):[]});
- plot($('c2'),xs,[{ys:R.map(r=>r.qber),c:'--wa',n:'QBER'}],{log:false,tf:v=>(v*100).toFixed(1),cur,min1:0.12,hl:P.proto==='cow'?null:0.11,pts:pk?EXP.map(e=>({x:e.d,y:e.q})):[]});
+ plot($('c1'),xs,[{ys:R.map(r=>r.skr),c:'--ac',n:'SKR'}],{log:lgS,floor:Math.min(1,P.rmin),tf:v=>nf(v),cur,pts:pk?EXP.map(e=>({x:e.d,y:e.skr,e:e.es})):[]});
+ plot($('c2'),xs,[{ys:R.map(r=>r.qber),c:'--wa',n:'QBER'}],{log:false,tf:v=>(v*100).toFixed(1),cur,min1:0.12,hl:P.proto==='cow'?null:0.11,pts:pk?EXP.map(e=>({x:e.d,y:e.q,e:e.eq})):[]});
  plot($('c3'),xs,Object.keys(N).map(k=>({ys:R.map(r=>r.noise[k]),c:col[k],n:nn[k]})),{log:true,floor:1e-9,tf:v=>v.toExponential(0),cur});
  $('tb').innerHTML=Object.entries(o.vals).map(([k,v])=>`<tr><td>${k.replace(/_/g,' ')}</td><td>${sci(v)}</td></tr>`).join('');
  $('csv').value=xl+',key_rate_bps,QBER_percent\n'+xs.map((x,i)=>[x,R[i].skr.toFixed(2),(R[i].qber*100).toFixed(3)].join(',')).join('\n');
@@ -315,17 +290,23 @@ $('vb').onclick=()=>{const T=[],ok=(n,c,d)=>T.push(`<tr><td>${n}</td><td>${c?'<s
  ok('Wider receiver filter raises Raman noise',calc({cc:true,dl:1}).noise.ram>=calc({cc:true,dl:0.1}).noise.ram,'');
  ok('No CC power gives no Raman or crosstalk noise',(q=>q.noise.ram+q.noise.xt<1e-15)(calc({cc:true,pco:-200})),'');
  ok('Zero filter bandwidth gives no Raman noise',calc({cc:true,dl:1e-12}).noise.ram<1e-15,'');
+ ok('Zero fibre loss gives unit transmission',calc({alp:'user',aQ:0}).T[0]===1,'');
+ ok('Zero misalignment, receiver loss and noise: QBER is zero',calc({proto:'bb84',cc:false,dcr:0,ap:0,ed:0,bob:0}).qber<1e-12,'');
+ ok('Zero DCR removes dark noise',calc({dcr:0}).noise.dark===0,'');
+ ok('Raman noise rises monotonically with CC power',calc({cc:true,pco:-10}).noise.ram<=calc({cc:true,pco:0}).noise.ram&&calc({cc:true,pco:0}).noise.ram<=calc({cc:true,pco:10}).noise.ram,'');
+ ok('Higher detector efficiency does not reduce key (no CC, dead time off)',calc({cc:false,td:0,etad:20}).skr<=calc({cc:false,td:0,etad:40}).skr*(1+1e-9),'');
+ ok('MDI arms are symmetric at x = 0.5 with equal μ',(q=>Math.abs(q.T[0]-q.T[1])<1e-12&&Math.abs(q.vals.η_A-q.vals.η_B)<1e-12)(calc({proto:'mdi',x:0.5,muB:P.mu})),'');
  ok('Zero length gives no Raman noise',calc({cc:true,L:1e-9}).noise.ram<1e-12,'');
  ok('Finite-size key does not exceed asymptotic key (BB84)',calc({proto:'bb84',sec:'fin'}).skr<=calc({proto:'bb84',sec:'asym'}).skr*(1+1e-9),'');
  $('vo').innerHTML='<table>'+T.join('')+'</table>'};
 // ---------- experiment
-$('expb').onclick=()=>{EXP=$('exp').value.split('\n').map(l=>l.split(',').map(Number)).filter(a=>a.length>=3&&a.every(isFinite)).map(a=>({d:a[0],q:a[1]/100,skr:a[2]}));
+$('expb').onclick=()=>{EXP=$('exp').value.split('\n').map(l=>l.split(',').map(Number)).filter(a=>a.length>=3&&a.every(isFinite)).map(a=>({d:a[0],q:a[1]/100,skr:a[2],eq:(a[3]||0)/100,es:a[4]||0}));
  if(!EXP.length){$('expo').innerHTML='<p class="warn">No valid rows. Use distance_km,qber_percent,skr_bps.</p>';return}
  const M=EXP.map(e=>calc({L:e.d})),rq=Math.sqrt(EXP.reduce((s,e,i)=>s+(e.q-M[i].qber)**2,0)/EXP.length)*100,rl=Math.sqrt(EXP.reduce((s,e,i)=>s+(Math.log10(Math.max(e.skr,1))-Math.log10(Math.max(M[i].skr,1)))**2,0)/EXP.length),mr=EXP.reduce((s,e,i)=>s+Math.abs(e.skr-M[i].skr)/Math.max(e.skr,1),0)/EXP.length*100;
- $('expo').innerHTML=`<table><tr><th>km</th><th>QBER meas.</th><th>QBER model</th><th>ΔQBER</th><th>SKR meas.</th><th>SKR model</th></tr>${EXP.map((e,i)=>`<tr><td>${e.d}</td><td>${(e.q*100).toFixed(2)}%</td><td>${(M[i].qber*100).toFixed(2)}%</td><td>${((e.q-M[i].qber)*100).toFixed(2)}</td><td>${nf(e.skr)}</td><td>${nf(M[i].skr)}</td></tr>`).join('')}</table><p><b>RMSE QBER:</b> ${rq.toFixed(2)} percentage points · <b>RMSE log₁₀ SKR:</b> ${rl.toFixed(2)} decades · <b>mean |error|:</b> ${mr.toFixed(0)}%</p>`;upd()};
+ $('expo').innerHTML=`<table><tr><th>km</th><th>QBER meas.</th><th>QBER model</th><th>ΔQBER</th><th>SKR meas.</th><th>SKR model</th><th>within error</th></tr>${EXP.map((e,i)=>`<tr><td>${e.d}</td><td>${(e.q*100).toFixed(2)}%</td><td>${(M[i].qber*100).toFixed(2)}%</td><td>${((e.q-M[i].qber)*100).toFixed(2)}</td><td>${nf(e.skr)}</td><td>${nf(M[i].skr)}</td><td>${e.eq||e.es?(Math.abs(e.q-M[i].qber)<=e.eq?'QBER ✓ ':'QBER ✗ ')+(Math.abs(e.skr-M[i].skr)<=e.es?'SKR ✓':'SKR ✗'):'–'}</td></tr>`).join('')}</table><p><b>RMSE QBER:</b> ${rq.toFixed(2)} percentage points · <b>RMSE log₁₀ SKR:</b> ${rl.toFixed(2)} decades · <b>mean |error|:</b> ${mr.toFixed(0)}%${(()=>{const y=EXP.map(e=>Math.log10(Math.max(e.skr,1))),yh=M.map(m=>Math.log10(Math.max(m.skr,1))),ym=y.reduce((a,b)=>a+b,0)/y.length,sr=y.reduce((a,v,i)=>a+(v-yh[i])**2,0),st=y.reduce((a,v)=>a+(v-ym)**2,0),ms=EXP.reduce((a,e,i)=>a+(e.q-M[i].qber),0)/EXP.length*100;return ' · <b>R² (log₁₀ SKR):</b> '+(st>0?(1-sr/st).toFixed(3):'n/a')+' · <b>mean signed ΔQBER:</b> '+ms.toFixed(2)+' pp'})()}</p>`;upd()};
 // ---------- export
-function json(o,dmax){const r={model:VER,params:{...P},channels:CH,raman_table:RS,results:{key_rate_bps:+o.skr.toFixed(3),qber:+o.qber.toFixed(5),max_distance_km:dmax,noise:o.noise,security:'asymptotic; no finite-key'}};let h=0;for(const c of JSON.stringify([r.params,CH,RS]))h=(h*31+c.charCodeAt(0))|0;r.id='QKD-'+(h>>>0).toString(36).toUpperCase();$('json').value=JSON.stringify(r,null,1)}
-$('jl').onclick=()=>{try{const r=JSON.parse($('json').value);Object.assign(P,r.params);CH=r.channels||CH;RS=r.raman_table||[];syncUI();upd()}catch(e){alert('Invalid JSON')}};
+function json(o,dmax){const r={model:VER,params:{...P},channels:CH,raman_table:RS,fibre_loss_table:AT,results:{key_rate_bps:+o.skr.toFixed(3),qber:+o.qber.toFixed(5),max_distance_km:dmax,noise:o.noise,security:(P.proto==='bb84'?(P.sec==='fin'?'finite-size Gaussian approximation (BB84); not a composable proof':'asymptotic analytical decoy-state lower bound (BB84)'):P.proto==='cow'?'COW phenomenological estimate; not a security proof':'MDI-QKD simplified asymptotic model; Y11 and e11 not decoy-estimated')}};let h=0;for(const c of JSON.stringify([r.params,CH,RS]))h=(h*31+c.charCodeAt(0))|0;r.id='QKD-'+(h>>>0).toString(36).toUpperCase();$('json').value=JSON.stringify(r,null,1)}
+$('jl').onclick=()=>{try{const r=JSON.parse($('json').value);Object.assign(P,r.params);CH=r.channels||CH;RS=r.raman_table||[];AT=r.fibre_loss_table||[];syncUI();upd()}catch(e){alert('Invalid JSON')}};
 $('pr').onclick=()=>window.print();
 addEventListener('resize',upd);syncUI();upd();
 </script></body></html>
